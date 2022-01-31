@@ -17,6 +17,7 @@ namespace RealEstateManager.Data.Models
         public virtual DbSet<County> Counties { get; set; }
         public virtual DbSet<House>  Houses { get; set; }
         public virtual DbSet<Apartment>  Apartments { get; set; }
+        public virtual DbSet<TenantUpload>   TenantUploads { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

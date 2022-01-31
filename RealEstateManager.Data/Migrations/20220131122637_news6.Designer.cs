@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealEstateManager.Data.Models;
 
 namespace RealEstateManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220131122637_news6")]
+    partial class news6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,9 +229,6 @@ namespace RealEstateManager.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("County")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
@@ -237,9 +236,6 @@ namespace RealEstateManager.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Town")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -532,9 +528,6 @@ namespace RealEstateManager.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ApartmentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("AttachmentName")
                         .HasColumnType("nvarchar(max)");
 
@@ -579,19 +572,14 @@ namespace RealEstateManager.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CountyId")
-                        .HasColumnType("int");
+                    b.Property<string>("AttachmentName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasMaxLength(450);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
@@ -599,10 +587,7 @@ namespace RealEstateManager.Data.Migrations
                     b.Property<string>("IdNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("KinFirstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("KinLastName")
+                    b.Property<string>("KinName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KinPhoneNumber")
@@ -620,32 +605,6 @@ namespace RealEstateManager.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Tenants");
-                });
-
-            modelBuilder.Entity("RealEstateManager.Data.Models.TenantUpload", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AttachmentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasMaxLength(450);
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TenantUploads");
                 });
 
             modelBuilder.Entity("RealEstateManager.Data.Models.AppUser", b =>

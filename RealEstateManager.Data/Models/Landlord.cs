@@ -7,6 +7,7 @@ namespace RealEstateManager.Data.Models
     public class Landlord 
     {
         public Guid Id { get; set; }
+        public Guid ApartmentId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }

@@ -42,7 +42,7 @@ namespace RealEstateManager
 
             services.AddScoped<ILandlordService, LandlordService>();
 
-            services.AddScoped<ITenantService, TenantService>();
+            services.AddScoped<ItenantService, TenantService>();
 
             services.AddScoped<IEmailService, EmailService>();
 

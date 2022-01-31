@@ -8,6 +8,8 @@ namespace RealEstateManager.Data.Models
     {
         public Guid Id { get; set; }
         public Guid ApartmentId { get; set; }
+        public Guid? TenantId { get; set; }
+        public byte Availability { get; set; }
         public DateTime CreateDate { get; set; }
         public Guid CreatedBy { get; set; }
     }
