@@ -1,0 +1,217 @@
+﻿
+
+@{
+    ViewData["Title"] = "Login";
+
+}
+
+<div class="body-content login-signup-content">
+    <div class="david">
+        <div class="login-signup-tab">
+            <ul class="nav nav-tabs" role="tablist">
+
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link  active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login" aria-selected="true">User Login</a>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link  " id="forgot-tab" data-toggle="tab" href="#forgot" role="tab" aria-controls="signup" aria-selected="false">Forgot password</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+
+                <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+                    <div class="login-signup-pane">
+                        <div class="login-signup-left-image col-md-6 x-hidden">
+                            <img src="~/images/Conscience.png" />
+                            @*<img src="/Content/images/login-pic.png">*@
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="login-signup-box">
+
+                                @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                                {
+
+                                    @if (TempData["Error"] != null)
+                                    {
+                                        <div class="alert alert-danger" role="alert" id="error">
+                                            @TempData["Error"].ToString()
+                                        </div>
+                                    }
+
+
+
+                                    <div>
+                                        <div class="alert alert-danger" role="alert" id="dvLoginError" style="display:none;">
+                                            An error occured, please re-try again.
+                                        </div>
+                                        <div class="form-group">
+                                            <label>User Name :</label>
+                                            <input type="text" class="form-control" name="Email" id="UserName" placeholder="UserName" required="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password :</label>
+                                            <input type="password" class="form-control" name="Password" id="Password" placeholder="Password" required="">
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="flex flex-space-between">
+                                                <div>
+                                                    <label class="remember-me">
+                                                        <input type="checkbox" id="chkRememberMe">
+                                                        <span>Remember me for 30 days</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary btn-block" id="btnLogin">Login</button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+                <div class="tab-pane fade show " id="forgot" role="tabpanel" aria-labelledby="forgot-tab">
+                    <div class="login-signup-pane">
+                        <div class="login-signup-left-image col-md-6 x-hidden">
+                            <img src="~/images/Conscience.png" />
+                        </div>
+                        <div class="login-signup-right col-md-6">
+                            <div class="login-signup-box">
+                                <div class="login-signup-header">To reset your password, enter your registered email address. We will email you the password reset link immediately.</div>
+
+                                <div style="display:none;" id="dvError">
+                                    <div class="alert alert-success" role="alert">
+                                        <h6 id="info"></h6>
+                                    </div>
+                                </div>
+
+                                <form id="frmReset">
+                                    <div>
+
+                                        <div class="form-group">
+                                            <label>Work Email :</label>
+                                            <input type="text" class="form-control" id="userEmail" name="Email" placeholder="Work Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary btn-block" id="btnForgotPwdd">Submit</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<link href="~/SweetAlart/sweetalert.min.css" rel="stylesheet" />
+<script src="~/SweetAlart/sweetalert.min.js"></script>
+
+<link src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    label {
+        float: left;
+    }
+
+    .david {
+        margin-top: 2rem;
+        margin: 5rem;
+    }
+
+    .nav-tabs {
+        width: 50%;
+        margin: auto;
+    }
+</style>
+<script type="text/javascript">
+
+
+    //function ShowLoader() {
+
+    //    $("#loadMe").modal('show');
+    //}
+
+    //function HideLoader() {
+
+    //    $("#loadMe").modal('hide');
+    //}
+
+
+
+
+
+
+
+    $("#btnForgotPwdd").click(function () {
+
+        var data = $("#frmReset").serialize();
+
+        $.ajax({
+
+            type: "POST",
+
+            url: "/Account/ForgotPassword/",
+
+            data: data,
+
+            beforeSend: function () { ShowLoader(); },
+
+            success: function (response) {
+
+                console.log(response.responseText);
+
+                if (response.success) {
+
+                    $("#dvError").show();
+
+                    $("#info").text(response.responseText);
+                }
+
+                else {
+                    swal({
+                        position: 'top-end',
+                        type: "error",
+                        title: response.responseText,
+                        showConfirmButton: true,
+                        timer: 5000,
+                    });
+                }
+            },
+
+            error: function (response) {
+                alert("error!");
+            },
+            complete: function () {
+                HideLoader();
+            }
+        })
+
+    })
+
+
+
+
+
+</script>
+
+
