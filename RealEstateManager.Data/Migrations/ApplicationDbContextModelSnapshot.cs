@@ -227,13 +227,18 @@ namespace RealEstateManager.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("County")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CountyId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedBy")
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
+
+                    b.Property<Guid>("LandlordId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -532,22 +537,36 @@ namespace RealEstateManager.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ApartmentId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("AttachmentName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BankAccountNo")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CountyId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(450);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KinFirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("KinLastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KinName")
@@ -565,7 +584,7 @@ namespace RealEstateManager.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PlotLocation")
+                    b.Property<string>("Town")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -615,6 +634,9 @@ namespace RealEstateManager.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Town")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

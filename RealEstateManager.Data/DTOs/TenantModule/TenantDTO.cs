@@ -12,7 +12,6 @@ namespace RealEstateManager.Data.DTOs.TenantModule
         public string FullName => FirstName + " " + LastName; 
         public string PhoneNumber { get; set; }
         public string IdNumber { get; set; } 
-
         public List<string> AttachmentName { get; set; }
         public string KinFirstName { get; set; }
         public string KinLastName { get; set; }
@@ -22,10 +21,10 @@ namespace RealEstateManager.Data.DTOs.TenantModule
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
         public string CreatedByName { get; set; }
-
         public string Email { get; set; }
         public string NewCreateDate { get { return CreateDate.ToShortDateString(); } }
         public int CountyId { get; set; }
         public string CountyName { get; set; }
+        public string Town { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace RealEstateManager.Data.Models
@@ -7,10 +8,13 @@ namespace RealEstateManager.Data.Models
     public class Apartment
     {
         public Guid Id { get; set; }
+        public Guid LandlordId { get; set; }
         public string Name { get; set; }
-        public string County { get; set; }
+        public int CountyId { get; set; }
         public string Town { get; set; }
         public DateTime CreateDate { get; set; }
-        public Guid CreatedBy { get; set; }
+        [Required]
+        [StringLength(450)]
+        public string CreatedBy { get; set; }
     }
 }

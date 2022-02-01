@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32002.261
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateManager", "RealEstateManager\RealEstateManager.csproj", "{DD71E551-8853-460F-839B-D43DFFDD5491}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstateManager", "RealEstateManager\RealEstateManager.csproj", "{DD71E551-8853-460F-839B-D43DFFDD5491}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstateManager.Data", "RealEstateManager.Data\RealEstateManager.Data.csproj", "{E3A29FEF-943A-448F-A04E-19291D5355CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstateManager.Data", "RealEstateManager.Data\RealEstateManager.Data.csproj", "{E3A29FEF-943A-448F-A04E-19291D5355CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportProject", "ReportProject\ReportProject.csproj", "{BD9F1682-05CA-40CC-BE46-1FBDCF3939CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{E3A29FEF-943A-448F-A04E-19291D5355CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3A29FEF-943A-448F-A04E-19291D5355CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3A29FEF-943A-448F-A04E-19291D5355CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD9F1682-05CA-40CC-BE46-1FBDCF3939CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD9F1682-05CA-40CC-BE46-1FBDCF3939CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD9F1682-05CA-40CC-BE46-1FBDCF3939CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD9F1682-05CA-40CC-BE46-1FBDCF3939CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

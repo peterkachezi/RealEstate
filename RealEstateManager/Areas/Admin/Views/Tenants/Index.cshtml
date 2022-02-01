@@ -82,127 +82,158 @@
 
                 <form id="userForm" name="userForm" class="form-horizontal" enctype="multipart/form-data">
 
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <h6 class="Title">Tenant' s Details</h6>
+                    <div class="row col-md-12">
+
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <h6 class="Title">Tenant' s Details</h6>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>First Name</label>
-                            <input type="text" name="FirstName" class="form-control" />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" name="FirstName" class="form-control" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Last Name</label>
-                            <input type="text" name="LastName" class="form-control" />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="LastName" class="form-control" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="text" name="PhoneNumber" class="form-control" />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" name="PhoneNumber" class="form-control" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>National ID</label>
-                            <input type="text" name="IdNumber" class="form-control" />
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>National ID</label>
+                                <input type="text" name="IdNumber" class="form-control" />
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email Address</label>
-                            <input type="email" class="form-control" id="txtEmail" name="Email" aria-describedby="emailHelp">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email Address</label>
+                                <input type="email" class="form-control" id="txtEmail" name="Email" aria-describedby="emailHelp">
+                            </div>
                         </div>
-                    </div>
 
 
 
-                    <div class="col-md-6 col-sm-6">
-                        <label for="middle-name" class="">Upload Files</label>
-                        <div class="">
-                            <input type="file" id="files" name="AttachmentName" multiple="multiple" class="form-control" />
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 col-sm-6">
-                        <label for="middle-name" class="">BodyType</label>
-                        <div class="">
-                            <select class="form-control" id="txtBodyId" name="BodyTypeId">
-                                @if (ViewBag.County != null)
-                                {
-                                    foreach (var item in ViewBag.County)
+                        <div class="col-md-6 col-sm-6">
+                            <label for="middle-name" class="">Select County</label>
+                            <div class="">
+                                <select class="form-control" id="txtBodyId" name="BodyTypeId">
+                                    @if (ViewBag.County != null)
                                     {
-                                        <option value="@item.Id">@item.Name</option>
+                                        foreach (var item in ViewBag.County)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
                                     }
-                                }
-
-
-                            </select>
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
 
-
-
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <h6 class="Title">Next of Kin Details</h6>
+                        <div class="col-md-6 col-sm-6">
+                            <label for="middle-name" class="">Upload Files</label>
+                            <div class="">
+                                <input type="file" id="files" name="AttachmentName" multiple="multiple" class="form-control" />
+                            </div>
                         </div>
-                    </div>
 
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">First Name</label>
-                            <input type="email" class="form-control" id="txtFirstName" name="KinFirstName" aria-describedby="emailHelp">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Town</label>
+                                <input type="email" class="form-control" id="txtEmail" name="Town" aria-describedby="emailHelp">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-sm-6">
 
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Last Name</label>
-                            <input type="email" class="form-control" id="txtLastName" name="KinLastName" aria-describedby="emailHelp">
+                        <div class="col-md-6 col-sm-6">
+                            <label for="middle-name" class="">Select Apartment</label>
+                            <div class="">
+                                <select class="form-control" id="txtBodyId" name="BodyTypeId">
+                                    @if (ViewBag.County != null)
+                                    {
+                                        foreach (var item in ViewBag.County)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-sm-6">
 
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Phone Number</label>
-                            <input type="email" class="form-control" id="txtLastName" name="KinPhoneNumber" aria-describedby="emailHelp">
+
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <h6 class="Title">Next of Kin Details</h6>
+                            </div>
                         </div>
-                    </div>
 
 
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="middle-name">Select Relationship</label>
-                            <select class="form-control" id="txtKinRelationship" name="KinRelationship">
-                                <option value="Spouse">Spouse</option>
-                                <option value="Son">Son</option>
-                                <option value="Daughter ">Daughter </option>
-                            </select>
-
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">First Name</label>
+                                <input type="email" class="form-control" id="txtFirstName" name="KinFirstName" aria-describedby="emailHelp">
+                            </div>
                         </div>
+
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Last Name</label>
+                                <input type="email" class="form-control" id="txtLastName" name="KinLastName" aria-describedby="emailHelp">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Phone Number</label>
+                                <input type="email" class="form-control" id="txtLastName" name="KinPhoneNumber" aria-describedby="emailHelp">
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="middle-name">Select Relationship</label>
+                                <select class="form-control" id="txtKinRelationship" name="KinRelationship">
+                                    <option value="Spouse">Spouse</option>
+                                    <option value="Son">Son</option>
+                                    <option value="Daughter ">Daughter </option>
+                                </select>
+
+                            </div>
+                        </div>
+
+
+
+
                     </div>
-
-                    <br />
-
 
                     <div class="modal-footer mb-1">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         <button type="button" id="btnSubmit" class="btn btn-success">Submit</button>
                     </div>
-
                 </form>
             </div>
         </div>

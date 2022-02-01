@@ -22,7 +22,7 @@ namespace RealEstateManager.Data.Models
         [Required]
         [StringLength(450)]
         public string CreatedBy { get; set; }
-
         public int CountyId { get; set; }
+        public string Town { get; set; }
     }
 }

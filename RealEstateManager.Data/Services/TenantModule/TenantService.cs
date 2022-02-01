@@ -36,6 +36,8 @@ namespace RealEstateManager.Data.Services.TenantModule
 
                     Email = tenantDTO.Email,
 
+                    Town = tenantDTO.Town,
+
                     KinFirstName = tenantDTO.KinFirstName,
 
                     KinLastName = tenantDTO.KinLastName,
@@ -112,6 +114,8 @@ namespace RealEstateManager.Data.Services.TenantModule
                                    IdNumber = t.IdNumber,
 
                                    Email = t.Email,
+
+                                   Town = t.Town,
 
                                    KinFirstName = t.KinFirstName,
 
