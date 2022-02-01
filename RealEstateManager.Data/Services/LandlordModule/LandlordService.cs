@@ -104,6 +104,8 @@ namespace RealEstateManager.Data.Services.LandlordModule
 
                                   join u in context.AppUser on l.CreatedBy equals u.Id
 
+                                  join c in context.Counties on l.CountyId equals c.Id
+
                                   select new LandlordDTO
                                   {
                                       Id = l.Id,
@@ -121,6 +123,8 @@ namespace RealEstateManager.Data.Services.LandlordModule
                                       IdNumber = l.IdNumber,
 
                                       CountyId = l.CountyId,
+
+                                      CountyName = c.Name,
 
                                       BankAccountNo = l.BankAccountNo,
 

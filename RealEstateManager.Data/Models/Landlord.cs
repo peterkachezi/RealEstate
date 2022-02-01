@@ -19,10 +19,9 @@ namespace RealEstateManager.Data.Models
         public string BankAccountNo { get; set; }
         public string KinLastName { get; set; }
         public string KinFirstName { get; set; }
-        public string KinName { get; set; }
         public string KinPhoneNumber { get; set; }
         public string KinRelationship { get; set; }
-        public string AttachmentName { get; set; }
+
         public DateTime CreateDate { get; set; }
         [Required]
         [StringLength(450)]

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RealEstateManager.Data.DTOs.LandlordModule;
 using RealEstateManager.Data.Models;
+using RealEstateManager.Data.Services.CountyModule;
 using RealEstateManager.Data.Services.LandlordModule;
 using System;
 using System.Collections.Generic;
@@ -15,17 +16,44 @@ namespace RealEstateManager.Areas.Admin.Controllers
     {
         private readonly ILandlordService landlordService;
 
+        private readonly ICountyService countyService;
+
         private readonly UserManager<AppUser> userManager;
-        public LandlordsController(UserManager<AppUser> userManager, ILandlordService landlordService)
+        public LandlordsController(ICountyService countyService, UserManager<AppUser> userManager, ILandlordService landlordService)
         {
             this.landlordService = landlordService;
 
             this.userManager = userManager;
+
+            this.countyService = countyService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.County = await countyService.GetAll();
+
             return View();
         }
+
+        public async Task<IActionResult> GetLandlords()
+        {
+            try
+            {
+                var landlords = (await landlordService.GetAll()).OrderBy(x => x.CreateDate).ToList();
+
+                return Json(new { data = landlords });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+        }
+
+
+
+
+
 
         public async Task<IActionResult> Create(LandlordDTO landlordDTO)
         {

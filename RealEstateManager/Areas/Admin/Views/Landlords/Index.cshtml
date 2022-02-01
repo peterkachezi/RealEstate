@@ -13,7 +13,7 @@
 
                 <div class="col-md-3">
 
-                    <h6 class="Title"><i class="fa fa-users"></i> Students</h6>
+                    <h6 class="Title"><i class="fa fa-users"></i> Landlords</h6>
                 </div>
 
 
@@ -39,16 +39,13 @@
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Current Class</th>
-                                    <th scope="col">Current Stream</th>
-                                    <th scope="col">Birth Cert No</th>
-                                    <th scope="col">Class Teacher</th>
+                         
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone Number</th>
+                                    <th scope="col">County</th>
+                                    <th scope="col">created By</th>
 
-                                    <th scope="col">Entry Date</th>
-
-
-
-
+                                    <th scope="col">Entry Date</th>                                                                
 
                                     <th scope="col">Action</th>
                                 </tr>
@@ -75,8 +72,7 @@
             </div>
             <div class="modal-body">
 
-
-                <form id="userForm" name="userForm" class="form-horizontal" enctype="multipart/form-data">
+                <form id="frmAddStudents" name="userForm" class="form-horizontal" enctype="multipart/form-data">
 
                     <div class="row col-md-12">
                     
@@ -126,7 +122,7 @@
                         <div class="col-md-6 col-sm-6">
                             <label for="middle-name" class="">Select County</label>
                             <div class="">
-                                <select class="form-control" id="txtBodyId" name="BodyTypeId">
+                                <select class="form-control" id="txtBodyId" name="CountyId">
                                     @if (ViewBag.County != null)
                                     {
                                         foreach (var item in ViewBag.County)
@@ -143,6 +139,13 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Town</label>
                                 <input type="email" class="form-control" id="txtEmail" name="Town" aria-describedby="emailHelp">
+                            </div>
+                        </div> 
+                        
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Bank Account No</label>
+                                <input type="email" class="form-control" id="txtBankAccountNo" name="BankAccountNo" aria-describedby="emailHelp">
                             </div>
                         </div>
 
@@ -273,25 +276,26 @@
 
         var t = $('#tblStudents').DataTable({
             "ajax": {
-                "url": "/Teacher/Students/GetStudents",
+                "url": "/Admin/Landlords/GetLandlords",
                 "type": "GET",
                 "datatype": "json"
             },
 
             "columns": [
 
-                { "data": "Id" },
-                { "data": "FullName" },
-                { "data": "ClassName" },
-                { "data": "EntryStreamName" },
-                { "data": "BirthCertNo" },
-                { "data": "TeacherName" },
-                { "data": "NewCreateDate" },
+                { "data": "id" },
+                { "data": "fullName" },
+               
+                { "data": "email" },
+                { "data": "phoneNumber" },
+                { "data": "countyName" },
+                { "data": "createdByName" },
+                { "data": "newCreateDate" },
 
                 {
                     data: null,
                     mRender: function (data, type, row) {
-                        return "<a href='#' class='btn-sm success'    onclick=GetRecord('" + row.Id + "'); >Edit</a> / <a href='#' class='btn-sm danger'    onclick=DeleteRecord('" + row.Id + "'); >Delete</a>";
+                        return "<a href='#' class='btn-sm success'    onclick=GetRecord('" + row.Id + "'); >Edit</a> / <a href='#' class='btn-sm btn-info'    onclick=DeleteRecord('" + row.Id + "'); >View Details</a>  /  <a href='#' class='btn-sm danger'    onclick=DeleteRecord('" + row.Id + "'); >Delete</a>";
 
                     }
                 }
@@ -439,7 +443,7 @@
 
                     type: "GET",
 
-                    url: "/Admin/Students/Delete/" + id,
+                    url: "/Admin/Landlords/Delete/" + id,
 
                     success: function (response) {
 
@@ -502,7 +506,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/Teacher/Students/GetStreams/" + classId,
+            url: "/Teacher/Landlords/GetStreams/" + classId,
             data: "{}",
 
             success: function (data) {
@@ -527,7 +531,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/Teacher/Students/GetStreams/" + classId,
+            url: "/Teacher/Landlords/GetStreams/" + classId,
             data: "{}",
 
             success: function (data) {
@@ -550,7 +554,7 @@
 
         var id = e;
 
-        $.get("/Teacher/Students/GetById/?Id=" + id, function (data, status) {
+        $.get("/Teacher/Landlords/GetById/?Id=" + id, function (data, status) {
 
             console.log(data);
 
