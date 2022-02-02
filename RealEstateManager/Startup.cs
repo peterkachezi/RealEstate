@@ -7,7 +7,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RealEstateManager.Data.Models;
+using RealEstateManager.Data.Services.ApartmentModule;
 using RealEstateManager.Data.Services.CountyModule;
+using RealEstateManager.Data.Services.HouseModule;
+using RealEstateManager.Data.Services.HouseTypeModule;
 using RealEstateManager.Data.Services.LandlordModule;
 using RealEstateManager.Data.Services.SMSModule;
 using RealEstateManager.Data.Services.TenantModule;
@@ -49,6 +52,12 @@ namespace RealEstateManager
             services.AddScoped<IMessagingService, MessagingService>();
 
             services.AddScoped<ICountyService, CountyService>();
+
+            services.AddScoped<IApartmentService, ApartmentService>();
+
+            services.AddScoped<IHouseTypeService, HouseTypeService>();
+
+            services.AddScoped<IHouseService, HouseService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +75,7 @@ namespace RealEstateManager
             }
             CreateRoles(roleManager);
 
-            CreateUsers(userManager);
+            CreateUsers(userManager);       
 
             app.UseHttpsRedirection();
 

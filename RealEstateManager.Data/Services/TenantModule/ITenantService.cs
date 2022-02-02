@@ -7,9 +7,10 @@ namespace RealEstateManager.Data.Services.TenantModule
 {
     public interface ItenantService
     {
-        Task<TenantDTO> Create(TenantDTO tenantDTO);
+        TenantDTO Create(TenantDTO tenantDTO);
         Task<TenantDTO> Update(TenantDTO tenantDTO);
         Task<List<TenantDTO>> GetAll();
         Task<TenantDTO> GetById(Guid Id);
+        Task<bool> Delete(Guid Id);
     }
 }

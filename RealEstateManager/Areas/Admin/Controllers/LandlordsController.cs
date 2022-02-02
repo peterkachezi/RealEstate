@@ -51,10 +51,6 @@ namespace RealEstateManager.Areas.Admin.Controllers
         }
 
 
-
-
-
-
         public async Task<IActionResult> Create(LandlordDTO landlordDTO)
         {
             try

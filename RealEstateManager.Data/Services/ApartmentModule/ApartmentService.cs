@@ -31,6 +31,10 @@ namespace RealEstateManager.Data.Services.ApartmentModule
 
                     Name = apartmentDTO.Name,
 
+                    Estate = apartmentDTO.Estate,
+
+                    PhysicalAddress = apartmentDTO.PhysicalAddress,
+
                     Town = apartmentDTO.Town,
 
                     CreateDate = DateTime.Now,
@@ -90,6 +94,8 @@ namespace RealEstateManager.Data.Services.ApartmentModule
 
                                  join u in context.AppUser on a.CreatedBy equals u.Id
 
+                                 join c in context.Counties on a.CountyId equals c.Id
+
                                  select new ApartmentDTO
                                  {
                                      Id = a.Id,
@@ -99,6 +105,12 @@ namespace RealEstateManager.Data.Services.ApartmentModule
                                      CountyId = a.CountyId,
 
                                      Name = a.Name,
+
+                                     CountyName = c.Name,
+
+                                     Estate = a.Estate,
+
+                                     PhysicalAddress = a.PhysicalAddress,
 
                                      Town = a.Town,
 
@@ -133,6 +145,8 @@ namespace RealEstateManager.Data.Services.ApartmentModule
 
                                  join u in context.AppUser on a.CreatedBy equals u.Id
 
+                                 join c in context.Counties on a.CountyId equals c.Id
+
                                  where a.Id == Id
 
                                  select new ApartmentDTO
@@ -143,7 +157,13 @@ namespace RealEstateManager.Data.Services.ApartmentModule
 
                                      CountyId = a.CountyId,
 
+                                     CountyName = c.Name,
+
                                      Name = a.Name,
+
+                                     Estate = a.Estate,
+
+                                     PhysicalAddress = a.PhysicalAddress,
 
                                      Town = a.Town,
 
@@ -174,13 +194,17 @@ namespace RealEstateManager.Data.Services.ApartmentModule
             {
                 using (var transaction = context.Database.BeginTransaction())
                 {
-                    var s = await context.Apartments.FindAsync();
+                    var s = await context.Apartments.FindAsync(apartmentDTO.Id);
                     {
                         s.LandlordId = apartmentDTO.LandlordId;
 
                         s.CountyId = apartmentDTO.CountyId;
 
                         s.Name = apartmentDTO.Name;
+
+                        s.Estate = apartmentDTO.Estate;
+
+                        s.PhysicalAddress = apartmentDTO.PhysicalAddress;
 
                         s.Town = apartmentDTO.Town;
                     };

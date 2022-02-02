@@ -8,7 +8,16 @@ namespace RealEstateManager.Data.DTOs.HouseModule
     {
         public Guid Id { get; set; }
         public Guid ApartmentId { get; set; }
+        public string ApartmentName { get; set; }
+        public Guid HouseTypeId { get; set; }
+        public string HouseTypeName { get; set; }
+        public string Name { get; set; }
+        public string Availability { get; set; }
+        public string Condition { get; set; }
+        public decimal RentAmount { get; set; }
         public DateTime CreateDate { get; set; }
-        public Guid CreatedBy { get; set; }
+        public string NewCreateDate { get { return CreateDate.ToShortDateString(); } }
+        public string CreatedBy { get; set; }
+        public string CreatedByName { get; set; }
     }
 }

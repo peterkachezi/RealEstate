@@ -18,18 +18,21 @@ namespace RealEstateManager.Data.Models
         public virtual DbSet<House>  Houses { get; set; }
         public virtual DbSet<Apartment>  Apartments { get; set; }
         public virtual DbSet<TenantUpload>   TenantUploads { get; set; }
+        public virtual DbSet<HouseType> HouseTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<HospitalVisit>(entity =>
-            //{
-            //    entity.Property(e => e.AmountBilled).HasColumnType("decimal(18,2)");
-            //    entity.HasKey(e => e.Id);
-            //    entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
+            modelBuilder.Entity<House>(entity =>
+            {
+                entity.Property(e => e.RentAmount).HasColumnType("decimal(18,2)");
 
-            //});
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
+
+            });
 
             //modelBuilder.Entity<Commission>(entity =>
             //{

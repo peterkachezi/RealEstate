@@ -16,7 +16,7 @@ namespace RealEstateManager.Data.Services.TenantModule
         {
             this.context = context;
         }
-        public async Task<TenantDTO> Create(TenantDTO tenantDTO)
+        public TenantDTO Create(TenantDTO tenantDTO)
         {
             try
             {
@@ -44,18 +44,21 @@ namespace RealEstateManager.Data.Services.TenantModule
 
                     KinPhoneNumber = tenantDTO.KinPhoneNumber,
 
+                    KinRelationship = tenantDTO.KinRelationship,
+
                     CreateDate = DateTime.Now,
 
                     CreatedBy = tenantDTO.CreatedBy,
 
-                    CountyId = tenantDTO.CountyId
+                    CountyId = tenantDTO.CountyId,
+
+                    HouseId = tenantDTO.HouseId,
 
                 };
 
                 context.Tenants.Add(s);
 
-                //var myimage = tenantDTO.AttachmentName.ToList();
-              
+
                 foreach (var item in tenantDTO.AttachmentName)
                 {
                     var image = new TenantUpload();
@@ -71,10 +74,11 @@ namespace RealEstateManager.Data.Services.TenantModule
                         image.CreatedBy = tenantDTO.CreatedBy;
 
                     };
-                    context.TenantUploads.Add(image);
+
+                    context.TenantUploads.AddRange(image);
                 }
 
-                await context.SaveChangesAsync();
+                context.SaveChanges();
 
                 return tenantDTO;
             }
@@ -100,6 +104,12 @@ namespace RealEstateManager.Data.Services.TenantModule
                                join u in context.AppUser on t.CreatedBy equals u.Id
 
                                join c in context.Counties on t.CountyId equals c.Id
+
+                               join h in context.Houses on t.HouseId equals h.Id
+
+                               join a in context.Apartments on h.ApartmentId equals a.Id
+
+                               join l in context.Landlords on a.LandlordId equals l.Id
 
                                select new TenantDTO
                                {
@@ -133,6 +143,18 @@ namespace RealEstateManager.Data.Services.TenantModule
 
                                    CountyName = c.Name,
 
+                                   HouseId = t.HouseId,
+
+                                   HouseName = h.Name,
+
+                                   ApartmentName = a.Name,
+
+                                   LandlordName = l.FirstName + " " + l.LastName,
+
+                                   LandlordEmail = l.Email,
+
+                                   LandlordPhoneNumber = l.PhoneNumber,
+
                                }).ToListAsync();
 
                 return await tenants;
@@ -148,6 +170,33 @@ namespace RealEstateManager.Data.Services.TenantModule
         public Task<TenantDTO> Update(TenantDTO tenantDTO)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> Delete(Guid Id)
+        {
+            try
+            {
+                bool result = false;
+
+                var s = await context.Tenants.FindAsync(Id);
+
+                if (s != null)
+                {
+                    context.Tenants.Remove(s);
+
+                    await context.SaveChangesAsync();
+
+                    return true;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return false;
+            }
         }
     }
 }

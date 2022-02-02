@@ -26,5 +26,12 @@ namespace RealEstateManager.Data.DTOs.TenantModule
         public int CountyId { get; set; }
         public string CountyName { get; set; }
         public string Town { get; set; }
+
+        public Guid HouseId { get; set; }
+        public string HouseName{ get; set; }
+        public string ApartmentName{ get; set; }
+        public string LandlordName{ get; set; }
+        public string LandlordEmail{ get; set; }
+        public string LandlordPhoneNumber{ get; set; }
     }
 }
