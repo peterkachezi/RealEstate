@@ -37,7 +37,7 @@ namespace RealEstateManager
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Scoped);
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
 
             services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
@@ -61,7 +61,7 @@ namespace RealEstateManager
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public  Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -73,9 +73,9 @@ namespace RealEstateManager
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            CreateRolesAsync(roleManager);
+            CreateRoles(roleManager);
 
-             CreateUsersAsync(userManager);       
+            CreateUsers(userManager);       
 
             app.UseHttpsRedirection();
 
@@ -101,11 +101,9 @@ namespace RealEstateManager
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
-           
         }
 
-        private async Task CreateRolesAsync(RoleManager<IdentityRole> roleManager)
+        private void CreateRoles(RoleManager<IdentityRole> roleManager)
         {
             try
             {
@@ -116,7 +114,7 @@ namespace RealEstateManager
 
                     role.Name = "Admin";
 
-                    await roleManager.CreateAsync(role);
+                    roleManager.CreateAsync(role);
                 }
 
                 if (!roleManager.RoleExistsAsync("Agent").Result)
@@ -125,7 +123,7 @@ namespace RealEstateManager
 
                     role.Name = "Agent";
 
-                    await roleManager.CreateAsync(role);
+                    roleManager.CreateAsync(role);
                 }
 
             }
@@ -137,7 +135,7 @@ namespace RealEstateManager
         }
 
 
-        private async Task CreateUsersAsync(UserManager<AppUser> userManager)
+        private void CreateUsers(UserManager<AppUser> userManager)
         {
             try
             {
@@ -159,6 +157,8 @@ namespace RealEstateManager
 
                     user.EmailConfirmed = true;
 
+                    user.isActive = true;
+
                     user.CreateDate = DateTime.Now;
 
                     string userPWD = "Admin@2022";
@@ -168,7 +168,7 @@ namespace RealEstateManager
                     //Add default User to Role Admin    
                     if (chkUser.Result.Succeeded)
                     {
-                        await userManager.AddToRoleAsync(user, "Admin");
+                        userManager.AddToRoleAsync(user, "Admin").Wait();
 
                     }
 
@@ -192,6 +192,8 @@ namespace RealEstateManager
 
                     user.EmailConfirmed = true;
 
+                    user.isActive = true;
+
                     user.CreateDate = DateTime.Now;
 
                     user.Commissions = 15;
@@ -203,7 +205,7 @@ namespace RealEstateManager
                     //Add default User to Role Admin    
                     if (chkUser.Result.Succeeded)
                     {
-                        await userManager.AddToRoleAsync(user, "Agent");
+                        userManager.AddToRoleAsync(user, "Agent").Wait();
 
                     }
                 }

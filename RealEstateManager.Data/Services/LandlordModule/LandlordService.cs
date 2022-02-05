@@ -66,24 +66,24 @@ namespace RealEstateManager.Data.Services.LandlordModule
 
                 context.Landlords.Add(s);
 
-                foreach (var item in landlordDTO.AttachmentName)
-                {
-                    var attachment = new LandlordUpload();
-                    {
-                        attachment.Id = Guid.NewGuid();
+                //foreach (var item in landlordDTO.AttachmentName)
+                //{
+                //    var attachment = new LandlordUpload();
+                //    {
+                //        attachment.Id = Guid.NewGuid();
 
-                        attachment.LandlordId = landlordDTO.Id;
+                //        attachment.LandlordId = landlordDTO.Id;
 
-                        attachment.AttachmentName = item;
+                //        attachment.AttachmentName = item;
 
-                        attachment.CreateDate = DateTime.Now;
+                //        attachment.CreateDate = DateTime.Now;
 
-                        attachment.CreatedBy = landlordDTO.CreatedBy;
+                //        attachment.CreatedBy = landlordDTO.CreatedBy;
 
-                    };
+                //    };
 
-                    context.LandlordUploads.AddRange(attachment);
-                }
+                //    context.LandlordUploads.AddRange(attachment);
+                //}
 
                 context.SaveChanges();
 

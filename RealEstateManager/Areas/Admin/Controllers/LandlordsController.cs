@@ -97,6 +97,45 @@ namespace RealEstateManager.Areas.Admin.Controllers
                     return Json(new { success = false, responseText = "The Email or Id Number  already exist in the system" });
 
                 }
+                var user = await userManager.FindByEmailAsync(User.Identity.Name);
+
+                landlordDTO.CreatedBy = user.Id;                          
+
+                var result = landlordService.Create(landlordDTO);
+
+                if (result != null)
+                {
+
+                   var sendsms = await messagingService.LandlordInfo(landlordDTO);
+
+                    return Json(new { success = true, responseText = "Landlord added successfully" });
+                }
+
+                else
+                {
+                    return Json(new { success = false, responseText = "Unable to add Landlord" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+        }
+
+        public async Task<IActionResult> Create1(LandlordDTO landlordDTO, IFormFile[] AttachmentName)
+        {
+            try
+            {
+                var isCarExist = (await landlordService.GetAll()).Where(x => x.IdNumber == landlordDTO.IdNumber).Count();
+
+                if (isCarExist > 0)
+                {
+                    return Json(new { success = false, responseText = "The Email or Id Number  already exist in the system" });
+
+                }
 
                 var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
@@ -140,7 +179,7 @@ namespace RealEstateManager.Areas.Admin.Controllers
                 if (result != null)
                 {
 
-                    //var sendsms = await messagingService.LandlordInfo(landlordDTO);
+                    var sendsms = await messagingService.LandlordInfo(landlordDTO);
 
                     return Json(new { success = true, responseText = "Landlord added successfully" });
                 }
@@ -158,8 +197,6 @@ namespace RealEstateManager.Areas.Admin.Controllers
                 return null;
             }
         }
-
-
 
 
 

@@ -121,6 +121,55 @@ namespace RealEstateManager.Areas.Admin.Controllers
 
                 var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
+                tenantDTO.CreatedBy = user.Id;         
+
+                var result = tenantService.Create(tenantDTO);
+
+                if (result != null)
+                {
+
+                    var sendsms = await messagingService.TenantInfo(tenantDTO);
+
+                    return Json(new { success = true, responseText = "Tenant has been successfully added" });
+                }
+
+                else
+                {
+                    return Json(new { success = false, responseText = "Unable to add Tenant" });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+        }
+        public async Task<IActionResult> Create1(TenantDTO tenantDTO, IFormFile[] AttachmentName)
+        {
+            try
+            {
+                if (tenantDTO.HouseId == null || tenantDTO.HouseId == Guid.Empty)
+                {
+                    return Json(new { success = false, responseText = "Please select a house" });
+                }
+
+                if (tenantDTO.ApartmentId == null || tenantDTO.ApartmentId == Guid.Empty)
+                {
+                    return Json(new { success = false, responseText = "Please select apartment" });
+                }
+
+                var isCarExist = (await tenantService.GetAll()).Where(x => x.IdNumber == tenantDTO.IdNumber).Count();
+
+                if (isCarExist > 0)
+                {
+                    return Json(new { success = false, responseText = "The Email or Id Number  already exist in the system" });
+
+                }
+
+                var user = await userManager.FindByEmailAsync(User.Identity.Name);
+
                 tenantDTO.CreatedBy = user.Id;
 
                 if (AttachmentName == null || AttachmentName.Length == 0)

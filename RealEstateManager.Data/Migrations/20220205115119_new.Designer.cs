@@ -10,7 +10,7 @@ using RealEstateManager.Data.Models;
 namespace RealEstateManager.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220205113641_new")]
+    [Migration("20220205115119_new")]
     partial class @new
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

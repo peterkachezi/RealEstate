@@ -17,6 +17,8 @@ namespace RealEstateManager.Data.Services.TenantModule
         {
             this.context = context;
         }
+
+
         public TenantDTO Create(TenantDTO tenantDTO)
         {
             try
@@ -57,7 +59,7 @@ namespace RealEstateManager.Data.Services.TenantModule
 
                     CountyId = tenantDTO.CountyId,
 
-                    TenantCode = tenantDTO.TenantCode,                                     
+                    TenantCode = tenantDTO.TenantCode,
 
                 };
 
@@ -75,31 +77,31 @@ namespace RealEstateManager.Data.Services.TenantModule
 
                     CreateDate = DateTime.Now,
 
-                    CreatedBy= tenantDTO.CreatedBy,
+                    CreatedBy = tenantDTO.CreatedBy,
                 };
 
                 context.RentedHouses.Add(rented);
 
-                foreach (var item in tenantDTO.AttachmentName)
-                {
-                    var image = new TenantUpload();
-                    {
-                        image.Id = Guid.NewGuid();
+                //foreach (var item in tenantDTO.AttachmentName)
+                //{
+                //    var image = new TenantUpload();
+                //    {
+                //        image.Id = Guid.NewGuid();
 
-                        image.TenantId = tenantDTO.Id;
+                //        image.TenantId = tenantDTO.Id;
 
-                        image.AttachmentName = item;
+                //        image.AttachmentName = item;
 
-                        image.CreateDate = DateTime.Now;
+                //        image.CreateDate = DateTime.Now;
 
-                        image.CreatedBy = tenantDTO.CreatedBy;
+                //        image.CreatedBy = tenantDTO.CreatedBy;
 
-                    };
+                //    };
 
-                    context.TenantUploads.AddRange(image);
-                }
+                //    context.TenantUploads.AddRange(image);
+                //}
 
-                using(var transaction = context.Database.BeginTransaction())
+                using (var transaction = context.Database.BeginTransaction())
                 {
                     var house = context.Houses.Find(tenantDTO.HouseId);
                     {
