@@ -18,7 +18,7 @@
 
 
                 <div class="col-md-9">
-                    <button type="button" class="btn btn-success btn-sm  pull-right" data-toggle="modal" data-target="#ModalAddStudent" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"></i>  </button>
+                    <button type="button" class="btn btn-success btn-sm  pull-right" data-toggle="modal" data-target="#ModalAddTenant" data-backdrop="static" data-keyboard="false"><i class="fa fa-plus-circle"></i>  </button>
                 </div>
 
 
@@ -44,17 +44,6 @@
                                     <th scope="col">County</th>
                                     <th scope="col">Created By</th>
                                     <th scope="col">Entry Date</th>
-                                    @*<th scope="col">Name</th>*@
-                                    @*<th scope="col">Entry Class</th>
-        <th scope="col">Entry Stream</th>
-        <th scope="col">Birth Cert No</th>
-
-        <th scope="col">Entry Date</th>*@
-
-
-
-
-
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
@@ -69,7 +58,8 @@
 
 
 
-<div class="modal fade" id="ModalAddStudent" tabindex="-1" role="dialog" aria-labelledby="ModalCreateDepartment" aria-hidden="true">
+
+<div class="modal fade" id="ModalAddTenant" tabindex="-1" role="dialog" aria-labelledby="ModalCreateDepartment" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -80,7 +70,7 @@
             </div>
             <div class="modal-body">
 
-                <form id="userForm" name="userForm" class="form-horizontal" enctype="multipart/form-data">
+                <form id="frmAddtenant" name="userForm" class="form-horizontal" enctype="multipart/form-data">
 
                     <div class="row col-md-12">
 
@@ -94,28 +84,28 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>First Name</label>
-                                <input type="text" name="FirstName" class="form-control" />
+                                <input type="text" id="txtFirstName" name="FirstName" class="form-control" />
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input type="text" name="LastName" class="form-control" />
+                                <input type="text" id="txtLastName" name="LastName" class="form-control" />
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Phone Number</label>
-                                <input type="text" name="PhoneNumber" class="form-control" />
+                                <input type="text" id="txtPhoneNumber" name="PhoneNumber" class="form-control" />
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>National ID</label>
-                                <input type="text" name="IdNumber" class="form-control" />
+                                <input type="text" id="txtIdNumber" name="IdNumber" class="form-control" />
                             </div>
                         </div>
 
@@ -154,12 +144,11 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Town</label>
-                                <input type="email" class="form-control" id="txtEmail" name="Town" aria-describedby="emailHelp">
+                                <input type="email" class="form-control" id="txtTown" name="Town" aria-describedby="emailHelp">
                             </div>
                         </div>
 
-
-                        <div class="col-sm-6">
+                        <div class="col-sm-10">
                             <label for="middle-name" class="">Select Apartment</label>
                             <div class="">
                                 <select class="form-control" id="txtApartmentId" name="ApartmentId" onchange="GetStreams()">
@@ -173,11 +162,17 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-sm-2">
+                            <label for="middle-name" class="">Select Apartment</label>
+
+                            <input type="button" class="btn btn-info" id="btnGetHouse" value="Get House" />
+                        </div>
+
 
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="middle-name">
-                                    Select Stream*
+                                    Select House*
                                 </label>
 
                                 <select class="form-control" id="txtHouseId" name="HouseId"></select>
@@ -201,7 +196,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="exampleInputEmail1">First Name</label>
-                                <input type="email" class="form-control" id="txtFirstName" name="KinFirstName" aria-describedby="emailHelp">
+                                <input type="email" class="form-control" id="txtKinFirstName" name="KinFirstName" aria-describedby="emailHelp">
                             </div>
                         </div>
 
@@ -209,7 +204,7 @@
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Last Name</label>
-                                <input type="email" class="form-control" id="txtLastName" name="KinLastName" aria-describedby="emailHelp">
+                                <input type="email" class="form-control" id="txtKinLastName" name="KinLastName" aria-describedby="emailHelp">
                             </div>
                         </div>
 
@@ -217,9 +212,10 @@
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Phone Number</label>
-                                <input type="email" class="form-control" id="txtLastName" name="KinPhoneNumber" aria-describedby="emailHelp">
+                                <input type="email" class="form-control" id="txtKinPhoneNumber" name="KinPhoneNumber" aria-describedby="emailHelp">
                             </div>
                         </div>
+
 
 
                         <div class="col-sm-6">
@@ -229,22 +225,24 @@
                                     <option value="Spouse">Spouse</option>
                                     <option value="Son">Son</option>
                                     <option value="Daughter ">Daughter </option>
+                                    <option value="Parent ">Parent </option>
+                                    <option value="Friend ">Friend </option>
                                 </select>
 
                             </div>
                         </div>
 
-
-
-
                     </div>
 
-                    <div class="modal-footer mb-1">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="button" id="btnSubmit" class="btn btn-success">Submit</button>
-                    </div>
+
                 </form>
             </div>
+
+            <div class="modal-footer mb-1">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSubmit" class="btn btn-success">Submit</button>
+            </div>
+
         </div>
     </div>
 </div>
@@ -325,14 +323,14 @@
                 { "data": "countyName" },
                 { "data": "createdByName" },
                 { "data": "newCreateDate" },
-              
+
 
 
 
                 {
                     data: null,
                     mRender: function (data, type, row) {
-                        return "<a href='#' class='btn-sm success'    onclick=GetRecord('" + row.id + "'); >Edit</a> / <a href='#' class='btn-sm btn-info'    onclick=DeleteRecord('" + row.id + "'); >View Details</a>  /  <a href='#' class='btn-sm danger'    onclick=DeleteRecord('" + row.id + "'); >Delete</a>";
+                        return "<a href='#' class='btn-sm success'    onclick=GetRecord('" + row.id + "'); >Edit</a> / <a href='#' class='btn-sm btn-info'    onclick=GetDetails('" + row.id + "'); >View Details</a>  /  <a href='#' class='btn-sm danger'    onclick=DeleteRecord('" + row.id + "'); >Delete</a>";
 
                     }
                 }
@@ -349,22 +347,161 @@
 
     $('#btnSubmit').click(function (evt) {
 
+        if (!$('#txtFirstName').val()) {
+
+            $('#txtFirstName').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "First Name is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtLastName').val()) {
+
+            $('#txtLastName').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Last Name is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtPhoneNumber').val()) {
+
+            $('#txtPhoneNumber').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Phone Number is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtIdNumber').val()) {
+
+            $('#txtIdNumber').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Id Number is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtEmail').val()) {
+
+            $('#txtEmail').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Email is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtCountyId').val()) {
+
+            $('#txtCountyId').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "County is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtTown').val()) {
+            $('#txtTown').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Town is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtApartmentId').val()) {
+            $('#txtApartmentId').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Apartment is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtHouseId').val()) {
+            $('#txtHouseId').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "House is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtKinFirstName').val()) {
+            $('#txtKinFirstName').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Next Of Kin First Name is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtKinLastName').val()) {
+            $('#txtKinLastName').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Next Of Kin Last Name is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtKinPhoneNumber').val()) {
+            $('#txtKinPhoneNumber').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Next Of Kin Phone Number is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+        if (!$('#txtKinRelationship').val()) {
+            $('#txtKinRelationship').focus();
+            swal({
+                position: 'top-end',
+                type: "error",
+                title: "Relationship is a required field",
+                showConfirmButton: true,
+            });
+            return false;
+        }
+
+        //$("#ModalAddTenant").modal('hide');
 
         $("#divLoader").show();
         // Stop the button from submitting the form:
         evt.preventDefault();
 
         // Serialize the entire form:
-        var data = new FormData(this.form);
+
+
+        var formData = new FormData($('#frmAddtenant').get(0));
 
 
         $.ajax({
             url: "/Admin/Tenants/Create/",
             type: "POST",
-            data: data,
+            data: formData,
             processData: false,
             contentType: false,
-
 
             success: function (response) {
                 if (response.success) {
@@ -374,8 +511,6 @@
                         type: "success",
                         title: response.responseText,
                         showConfirmButton: false,
-
-
                     }), setTimeout(function () { location.reload(); }, 3000);
 
                 } else {
@@ -403,6 +538,45 @@
         });
 
     });
+
+    $('#btnGetHouse').click(function (evt) {
+
+
+        var apartmentId = $('#txtApartmentId').val();
+
+        console.log(apartmentId);
+
+        $.ajax({
+            type: "GET",
+            url: "/Admin/Tenants/GetHouses/" + apartmentId,
+            data: "{}",
+
+            success: function (data) {
+
+                var s = '<option value="-1">Please Select House</option>';
+
+                for (var i = 0; i < data.length; i++) {
+
+                    s += '<option value="' + data[i].houseId + '">' + data[i].houseName + '</option>';
+                }
+
+                $("#txtHouseId").html(s);
+
+                console.log(data);
+            }
+
+
+        });
+
+    });
+
+
+
+
+
+
+
+
 
     function DeleteRecord(e) {
 
@@ -467,6 +641,7 @@
                                 showConfirmButton: true,
                                 timer: 5000,
                             });
+
                             $("#divLoader").hide();
                         }
 
@@ -487,7 +662,6 @@
             }
         );
     }
-
 
     function GetStreams() {
 
@@ -517,8 +691,6 @@
 
         });
     }
-
-
 
     //Allow users to enter numbers only
     $(".numericOnly").bind('keypress', function (e) {

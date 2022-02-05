@@ -22,10 +22,11 @@ namespace RealEstateManager.Data.DTOs.LandlordModule
         public string KinName => KinFirstName + " " + KinLastName;
         public string KinPhoneNumber { get; set; }
         public string KinRelationship { get; set; }
-        public string AttachmentName { get; set; }
+        public List<string> AttachmentName { get; set; }
         public DateTime CreateDate { get; set; }
         public string NewCreateDate { get { return CreateDate.ToShortDateString(); } }
         public string CreatedBy { get; set; }
         public string CreatedByName { get; set; }
+        public string LandlordCode { get; set; }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using RealEstateManager.Data.Helpers;
 
 namespace RealEstateManager.Data.Services.LandlordModule
 {
@@ -17,13 +18,19 @@ namespace RealEstateManager.Data.Services.LandlordModule
         {
             this.context = context;
         }
-        public async Task<LandlordDTO> Create(LandlordDTO landlordDTO)
+        public LandlordDTO Create(LandlordDTO landlordDTO)
         {
             try
             {
+                string landlord_number = LandlordNumber.GenerateUniqueNumber();
+
+                landlordDTO.LandlordCode = "L" + "" + landlord_number;
+
+                landlordDTO.Id = Guid.NewGuid();
+
                 var s = new Landlord
                 {
-                    Id = Guid.NewGuid(),
+                    Id = landlordDTO.Id,
 
                     FirstName = landlordDTO.FirstName,
 
@@ -53,11 +60,32 @@ namespace RealEstateManager.Data.Services.LandlordModule
 
                     CreatedBy = landlordDTO.CreatedBy,
 
+                    LandlordCode = landlordDTO.LandlordCode,
+
                 };
 
                 context.Landlords.Add(s);
 
-                await context.SaveChangesAsync();
+                foreach (var item in landlordDTO.AttachmentName)
+                {
+                    var attachment = new LandlordUpload();
+                    {
+                        attachment.Id = Guid.NewGuid();
+
+                        attachment.LandlordId = landlordDTO.Id;
+
+                        attachment.AttachmentName = item;
+
+                        attachment.CreateDate = DateTime.Now;
+
+                        attachment.CreatedBy = landlordDTO.CreatedBy;
+
+                    };
+
+                    context.LandlordUploads.AddRange(attachment);
+                }
+
+                context.SaveChanges();
 
                 return landlordDTO;
             }
@@ -115,6 +143,8 @@ namespace RealEstateManager.Data.Services.LandlordModule
                                       LastName = l.LastName,
 
                                       PhoneNumber = l.PhoneNumber,
+
+                                      LandlordCode = l.LandlordCode,
 
                                       Town = l.Town,
 

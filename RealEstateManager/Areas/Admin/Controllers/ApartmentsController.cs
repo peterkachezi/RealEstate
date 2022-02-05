@@ -77,6 +77,8 @@ namespace RealEstateManager.Areas.Admin.Controllers
         {
             try
             {
+             
+
                 var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
                 houseDTO.CreatedBy = user.Id;
@@ -103,8 +105,13 @@ namespace RealEstateManager.Areas.Admin.Controllers
         public async Task<IActionResult> Create(ApartmentDTO apartmentDTO)
         {
             try
-            {              
-                    var user = await userManager.FindByEmailAsync(User.Identity.Name);
+            {
+                if (apartmentDTO.LandlordId == null || apartmentDTO.LandlordId == Guid.Empty)
+                {
+                    return Json(new { success = false, responseText = "Please select a landlord" });
+                }
+
+                var user = await userManager.FindByEmailAsync(User.Identity.Name);
 
                     apartmentDTO.CreatedBy = user.Id;
 

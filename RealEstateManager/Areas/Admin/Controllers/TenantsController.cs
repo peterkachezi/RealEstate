@@ -7,6 +7,7 @@ using RealEstateManager.Data.Models;
 using RealEstateManager.Data.Services.ApartmentModule;
 using RealEstateManager.Data.Services.CountyModule;
 using RealEstateManager.Data.Services.HouseModule;
+using RealEstateManager.Data.Services.SMSModule;
 using RealEstateManager.Data.Services.TenantModule;
 using System;
 using System.Collections.Generic;
@@ -21,18 +22,22 @@ namespace RealEstateManager.Areas.Admin.Controllers
     {
         private readonly ItenantService tenantService;
 
-        private readonly ICountyService  countyService;
+        private readonly ICountyService countyService;
 
-        private readonly IApartmentService   apartmentService;
+        private readonly IApartmentService apartmentService;
 
         private readonly IHouseService houseService;
+
+        private readonly IMessagingService messagingService;
 
         private readonly UserManager<AppUser> userManager;
 
         private IWebHostEnvironment env;
-        public TenantsController(IHouseService houseService,IApartmentService apartmentService,ICountyService countyService,IWebHostEnvironment env,UserManager<AppUser> userManager,ItenantService tenantService)
+        public TenantsController(IMessagingService messagingService, IHouseService houseService, IApartmentService apartmentService, ICountyService countyService, IWebHostEnvironment env, UserManager<AppUser> userManager, ItenantService tenantService)
         {
             this.env = env;
+
+            this.messagingService = messagingService;
 
             this.tenantService = tenantService;
 
@@ -96,11 +101,21 @@ namespace RealEstateManager.Areas.Admin.Controllers
         {
             try
             {
-                var isCarExist = (await tenantService.GetAll()).Where(x=>x.Email==tenantDTO.Email).Count();
+                if (tenantDTO.HouseId == null || tenantDTO.HouseId == Guid.Empty)
+                {
+                    return Json(new { success = false, responseText = "Please select a house" });
+                }
+
+                if (tenantDTO.ApartmentId == null || tenantDTO.ApartmentId == Guid.Empty)
+                {
+                    return Json(new { success = false, responseText = "Please select apartment" });
+                }
+
+                var isCarExist = (await tenantService.GetAll()).Where(x => x.IdNumber == tenantDTO.IdNumber).Count();
 
                 if (isCarExist > 0)
                 {
-                    return Json(new { success = false, responseText = "This tenants already exist in the system" });
+                    return Json(new { success = false, responseText = "The Email or Id Number  already exist in the system" });
 
                 }
 
@@ -145,9 +160,11 @@ namespace RealEstateManager.Areas.Admin.Controllers
 
                 var result = tenantService.Create(tenantDTO);
 
-
                 if (result != null)
                 {
+
+                    var sendsms = await messagingService.TenantInfo(tenantDTO);
+
                     return Json(new { success = true, responseText = "Tenant has been successfully added" });
                 }
 
@@ -168,11 +185,10 @@ namespace RealEstateManager.Areas.Admin.Controllers
         public async Task<ActionResult> GetHouses(Guid Id)
         {
             try
-            {               
-
+            {
                 var all = await houseService.GetAll();
 
-                var streams = all.Where(x => x.ApartmentId == Id).ToList();
+                var streams = all.Where(x => x.ApartmentId == Id && x.Availability != 1).ToList();
 
                 return Json(streams.Select(x => new
                 {

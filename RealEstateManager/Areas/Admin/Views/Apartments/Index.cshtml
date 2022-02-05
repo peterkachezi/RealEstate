@@ -276,7 +276,7 @@
                     
                     <div class="form-group">
                         <label for="exampleInputEmail1">Rent Amount</label>
-                        <input type="email" class="form-control" id="txtRentAmount" name="RentAmount" aria-describedby="emailHelp" placeholder="e.g 7500,3500">
+                        <input type="email" class="form-control numericOnly" id="txtRentAmount" name="RentAmount" aria-describedby="emailHelp" placeholder="e.g 7500,3500">
                     </div>
 
                     <div class="form-group">
@@ -634,9 +634,10 @@
                 if (response.success) {
 
                     swal({
-                        title: "Success!",
-                        text: response.responseText,
-                        type: "success"
+                        position: 'top-end',
+                        type: "success",
+                        title: response.responseText,
+                        showConfirmButton: false,
                     }), setTimeout(function () { location.reload(); }, 3000);
 
                 } else {

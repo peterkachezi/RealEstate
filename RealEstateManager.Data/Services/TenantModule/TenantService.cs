@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEstateManager.Data.DTOs.TenantModule;
+using RealEstateManager.Data.Helpers;
 using RealEstateManager.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,10 @@ namespace RealEstateManager.Data.Services.TenantModule
         {
             try
             {
+                string code = TenantCode.GenerateUniqueNumber();
+
+                tenantDTO.TenantCode = "T" + "" + code;
+
                 tenantDTO.Id = Guid.NewGuid();
 
                 var s = new Tenant
@@ -52,12 +57,28 @@ namespace RealEstateManager.Data.Services.TenantModule
 
                     CountyId = tenantDTO.CountyId,
 
-                    HouseId = tenantDTO.HouseId,
+                    TenantCode = tenantDTO.TenantCode,                                     
 
                 };
 
                 context.Tenants.Add(s);
 
+                var rented = new RentedHouse
+                {
+                    Id = Guid.NewGuid(),
+
+                    TenantId = tenantDTO.Id,
+
+                    HouseId = tenantDTO.HouseId,
+
+                    ApartmentId = tenantDTO.ApartmentId,
+
+                    CreateDate = DateTime.Now,
+
+                    CreatedBy= tenantDTO.CreatedBy,
+                };
+
+                context.RentedHouses.Add(rented);
 
                 foreach (var item in tenantDTO.AttachmentName)
                 {
@@ -76,6 +97,15 @@ namespace RealEstateManager.Data.Services.TenantModule
                     };
 
                     context.TenantUploads.AddRange(image);
+                }
+
+                using(var transaction = context.Database.BeginTransaction())
+                {
+                    var house = context.Houses.Find(tenantDTO.HouseId);
+                    {
+                        house.Availability = 1;
+                    }
+                    transaction.Commit();
                 }
 
                 context.SaveChanges();
@@ -105,11 +135,11 @@ namespace RealEstateManager.Data.Services.TenantModule
 
                                join c in context.Counties on t.CountyId equals c.Id
 
-                               join h in context.Houses on t.HouseId equals h.Id
+                               //join h in context.Houses on t.HouseId equals h.Id
 
-                               join a in context.Apartments on h.ApartmentId equals a.Id
+                               //join a in context.Apartments on h.ApartmentId equals a.Id
 
-                               join l in context.Landlords on a.LandlordId equals l.Id
+                               //join l in context.Landlords on a.LandlordId equals l.Id
 
                                select new TenantDTO
                                {
@@ -139,21 +169,23 @@ namespace RealEstateManager.Data.Services.TenantModule
 
                                    CountyId = t.CountyId,
 
-                                   CreatedByName = u.FirstName +" " + u.LastName,
+                                   CreatedByName = u.FirstName + " " + u.LastName,
 
                                    CountyName = c.Name,
 
-                                   HouseId = t.HouseId,
+                                   TenantCode = t.TenantCode,
 
-                                   HouseName = h.Name,
+                                   //HouseId = t.HouseId,
 
-                                   ApartmentName = a.Name,
+                                   //HouseName = h.Name,
 
-                                   LandlordName = l.FirstName + " " + l.LastName,
+                                   //ApartmentName = a.Name,
 
-                                   LandlordEmail = l.Email,
+                                   //LandlordName = l.FirstName + " " + l.LastName,
 
-                                   LandlordPhoneNumber = l.PhoneNumber,
+                                   //LandlordEmail = l.Email,
+
+                                   //LandlordPhoneNumber = l.PhoneNumber,
 
                                }).ToListAsync();
 

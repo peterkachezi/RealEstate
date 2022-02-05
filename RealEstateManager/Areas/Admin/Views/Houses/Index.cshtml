@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<RealEstateManager.Data.DTOs.HouseModule.HouseDTO>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
@@ -33,13 +34,14 @@
                     <div class="card-box table-responsive">
 
 
-                        <table id="tblEmployees" class="table table-striped table-bordered dt-responsive nowrap table-sm" cellspacing="0" width="100%">
+                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap table-sm" cellspacing="0" width="100%">
 
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
                                     <th scope="col">Apartment </th>
                                     <th scope="col">House Name</th>
+                                    <th scope="col">Rent Amount</th>
 
                                     <th scope="col">Availability</th>
                                     <th scope="col">House Type</th>
@@ -52,6 +54,60 @@
 
                                 </tr>
                             </thead>
+
+                            <tbody>
+
+                                @if (Model != null && Model.Count() > 0)
+                                {
+                                    int count = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@count</td>
+                                            <td>@item.ApartmentName</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.RentAmount</td>
+                                            <td>
+                                                @{
+                                                    var status = item.Availability;
+
+                                                    if (status == 0)
+                                                    {
+                                                        <span class="vacant">Vacant</span>
+                                                    }
+
+                                                    if (status == 1)
+                                                    {
+                                                        <span class="occupied">Occupied</span>
+                                                    }
+
+                                                }
+                                            </td>
+                                            <td>@item.HouseTypeName</td>
+                                            <td>@item.Condition</td>
+                                            <td>@item.CreatedByName</td>
+
+                                            <td>@item.CreateDate.ToShortDateString()</td>
+
+                                            <td>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-success dropdown-toggle  btn-sm" style="height: 1.5rem;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        Active
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#" onclick="GetHouse('@item.Id')" value="@item.Id">Edit</a>
+                                                        <a class="dropdown-item" href="#" onclick="DeleteRecord('@item.Id')" value="@item.Id">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        count++;
+                                    }
+                                }
+
+                            </tbody>
+
+
                         </table>
 
                     </div>
@@ -93,8 +149,8 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Availability</label>
                             <select class="form-control" id="txtAvailability" name="Availability">
-                                <option value="Vacant">Vacant</option>
-                                <option value="Occupied">Occupied</option>
+                                <option value="0">Vacant</option>
+                                <option value="1">Occupied</option>
                             </select>
                         </div>
                     </div>
@@ -110,20 +166,24 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="middle-name">Select Apartment</label>
-                            <select class="form-control" id="txtApartmentId" name="apartmentId">
-                                @if (ViewBag.Apartment != null)
-                                {
-                                    foreach (var item in ViewBag.Apartment)
-                                    {
-                                        <option value="@item.Id">@item.Name</option>
-                                    }
-                                }
+                            <div class="form-group">
+                                <label for="middle-name">Select Apartment</label>
+                                <select class="form-control" id="txtApartmentId" name="apartmentId">
 
-                            </select>
+                                    @if (ViewBag.Apartment != null)
+                                    {
+                                        foreach (var item in ViewBag.Apartment)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    }
+
+                                </select>
+                            </div>
                         </div>
-                    </div>
+
+        
+
 
                     <div class="col-md-6">
                         <div class="form-group">
@@ -168,6 +228,19 @@
 
 <style>
 
+
+    .occupied {
+        color: #fa1a2f;
+        font-weight: 800;
+    }
+
+    .vacant {
+        color: #0dae7a;
+        font-weight: 800;
+    }
+
+
+
     .success {
         background: #26B99A;
         color: #fff;
@@ -206,10 +279,13 @@
 <script>
 
 
-    $(document).ready(function () {
-        GetAllData();
 
+    $(document).ready(function () {
+        $('#dataTable').DataTable();
+       
     });
+
+
 
     function GetAllData() {
 
@@ -226,14 +302,12 @@
                 { "data": "id" },
                 { "data": "apartmentName" },
                 { "data": "name" },
-                { "data": "availability" },
+                { "data": "newRentAmount" },
+                { "data": "availabilityDescription" },
                 { "data": "houseTypeName" },
                 { "data": "condition" },
                 { "data": "createdByName" },
                 { "data": "newCreateDate" },
-
-
-
                 {
                     data: null,
                     mRender: function (data, type, row) {
@@ -329,10 +403,18 @@
             }
 
         });
+
+
+
+
+
+
+
     };
     function DeleteRecord(e) {
 
         $("#divLoader").show();
+
         var id = e;
 
         console.log(id);
@@ -382,7 +464,6 @@
 
                             });
                             setTimeout(function () { location.reload(); }, 3000);
-
                         }
 
                         else {

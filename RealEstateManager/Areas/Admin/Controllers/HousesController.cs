@@ -39,15 +39,45 @@ namespace RealEstateManager.Areas.Admin.Controllers
 
             ViewBag.HouseTypes = await houseTypeService.GetAll();
 
-            return View();
+            var house = (await houseService.GetAll()).OrderBy(x => x.CreateDate).ToList();
+
+            return View(house);
         }
+
+        public async Task<ActionResult> GetApartment()
+        {
+            try
+            {  
+                var apartment = await apartmentService.GetAll();
+
+                return Json(apartment.Select(x => new
+                {
+                    ApartmenId = x.Id,
+
+                    ApartmentName = x.Name
+
+                }).ToList());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+                return null;
+            }
+
+        }
+
+
+
+
         public async Task<IActionResult> GetHouses()
         {
             try
             {
                 var landlords = (await houseService.GetAll()).OrderBy(x => x.CreateDate).ToList();
 
-                return Json(new { data = landlords });
+                return View(landlords);
+
             }
             catch (Exception ex)
             {

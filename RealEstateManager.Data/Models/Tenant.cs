@@ -24,6 +24,7 @@ namespace RealEstateManager.Data.Models
         public string CreatedBy { get; set; }
         public int CountyId { get; set; }
         public string Town { get; set; }
-        public Guid HouseId { get; set; }
+        public string TenantCode { get; set; }
+
     }
 }

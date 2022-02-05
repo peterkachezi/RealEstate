@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
+using static RealEstateManager.Data.Utils.Enumerations;
 
 namespace RealEstateManager.Data.Services.HouseModule
 {
@@ -17,9 +19,6 @@ namespace RealEstateManager.Data.Services.HouseModule
         {
             this.context = context;
         }
-
-
-
 
 
 
@@ -101,7 +100,6 @@ namespace RealEstateManager.Data.Services.HouseModule
 
                               join ht in context.HouseTypes on h.HouseTypeId equals ht.Id
 
-
                               select new HouseDTO
                               {
                                   Id = h.Id,
@@ -115,6 +113,8 @@ namespace RealEstateManager.Data.Services.HouseModule
                                   HouseTypeName = ht.Name,
 
                                   Availability = h.Availability,
+
+                                  AvailabilityDescription = GetDescription((HouseStatus)h.Availability),
 
                                   Name = h.Name,
 
@@ -163,6 +163,8 @@ namespace RealEstateManager.Data.Services.HouseModule
                                   HouseTypeId = h.HouseTypeId,
 
                                   Availability = h.Availability,
+
+                                  AvailabilityDescription = GetDescription((HouseStatus)h.Availability),
 
                                   Name = h.Name,
 
@@ -223,6 +225,29 @@ namespace RealEstateManager.Data.Services.HouseModule
 
                 return null;
             }
+        }
+
+
+        private static object SyncObj = new object();
+
+        static Dictionary<Enum, string> _enumDescriptionCache = new Dictionary<Enum, string>();
+        public static string GetDescription(Enum value)
+        {
+            if (value == null) return string.Empty;
+
+            lock (SyncObj)
+            {
+                if (!_enumDescriptionCache.ContainsKey(value))
+                {
+                    var description = (from m in value.GetType().GetMember(value.ToString())
+                                       let attr = (DescriptionAttribute)m.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault()
+                                       select attr == null ? value.ToString() : attr.Description).FirstOrDefault();
+
+                    _enumDescriptionCache.Add(value, description);
+                }
+            }
+
+            return _enumDescriptionCache[value];
         }
     }
 }

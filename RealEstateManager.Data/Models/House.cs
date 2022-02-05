@@ -11,7 +11,7 @@ namespace RealEstateManager.Data.Models
         public Guid ApartmentId { get; set; }
         public Guid HouseTypeId { get; set; }
         public string Name { get; set; }
-        public string Availability { get; set; }
+        public byte Availability { get; set; }
         public string Condition { get; set; }
         public decimal RentAmount { get; set; }
         public DateTime CreateDate { get; set; }

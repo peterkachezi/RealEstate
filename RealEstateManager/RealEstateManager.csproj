@@ -56,6 +56,7 @@
     <Folder Include="Areas\Agent\Data\" />
     <Folder Include="Areas\Agent\Models\" />
     <Folder Include="Areas\Agent\Views\" />
+    <Folder Include="wwwroot\landlorduploads\" />
     <Folder Include="wwwroot\tenant_uploads\" />
   </ItemGroup>
 

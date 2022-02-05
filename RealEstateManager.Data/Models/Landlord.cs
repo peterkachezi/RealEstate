@@ -8,7 +8,7 @@ namespace RealEstateManager.Data.Models
     public class Landlord
     {
         public Guid Id { get; set; }
-        public string FirstName { get; set; }
+        public string FirstName { get; set; }      
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
@@ -26,5 +26,7 @@ namespace RealEstateManager.Data.Models
         [Required]
         [StringLength(450)]
         public string CreatedBy { get; set; }
+
+        public string LandlordCode { get; set; }
     }
 }

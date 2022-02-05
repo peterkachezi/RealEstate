@@ -75,11 +75,11 @@ namespace RealEstateManager.Areas.Admin.Controllers
 
         public async Task<ActionResult> GetUsers()
         {
-            var doctor = (await userManager.Users.ToListAsync());
+            var user = (await userManager.Users.ToListAsync());
 
-            var doctors = new List<ApplicationUserDTO>();
+            var users = new List<ApplicationUserDTO>();
 
-            foreach (var item in doctor)
+            foreach (var item in user)
             {
                 var data = new ApplicationUserDTO
                 {
@@ -101,10 +101,10 @@ namespace RealEstateManager.Areas.Admin.Controllers
 
                 };
 
-                doctors.Add(data);
+                users.Add(data);
             }
 
-            return Json(new { data = doctor });
+            return Json(new { data = users });
 
         }
         public IActionResult RegisterUser()

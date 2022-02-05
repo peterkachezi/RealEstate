@@ -7,7 +7,7 @@ namespace RealEstateManager.Data.Services.LandlordModule
 {
     public interface ILandlordService
     {
-        Task<LandlordDTO> Create(LandlordDTO landlordDTO);
+        LandlordDTO Create(LandlordDTO landlordDTO);
         Task<LandlordDTO> Update(LandlordDTO landlordDTO);
         Task<bool> Delete(Guid Id);
         Task<LandlordDTO> GetById(Guid Id);
